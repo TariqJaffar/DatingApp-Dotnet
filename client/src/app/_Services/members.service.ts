@@ -18,6 +18,8 @@ getMember(userName:string){
   return this.http.get<Member>(this.baseUrl+'User/'+userName,);
 }
 
-
+updatemember(member:Member){
+  return this.http.put(this.baseUrl+'User',member);
+}
 
 }
