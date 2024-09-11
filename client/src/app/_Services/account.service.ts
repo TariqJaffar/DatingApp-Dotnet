@@ -26,9 +26,7 @@ export class AccountService {
       .pipe(
         map((user) => {
           if (user) {
-            console.log("User logged in: ", user); // Debug log
-            localStorage.setItem('user', JSON.stringify(user));
-            this.currentUser.set(user);
+           this.SetCurrentUser(user);
           }
         })
       );
@@ -39,14 +37,18 @@ export class AccountService {
       .pipe(
         map((user) => {
           if (user) {
-            console.log("User registered: ", user); // Debug log
-            localStorage.setItem('user', JSON.stringify(user));
-            this.currentUser.set(user);
+           this.SetCurrentUser(user);
           }
           return user;
         })
       );
   }
+
+SetCurrentUser(user:User){
+  console.log("User registered: ", user); // Debug log
+  localStorage.setItem('user', JSON.stringify(user));
+  this.currentUser.set(user);
+}
 
   logout() {
     localStorage.removeItem('user');

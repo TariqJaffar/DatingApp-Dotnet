@@ -43,7 +43,9 @@ return Ok();
     [HttpPost("login")]
     public async Task<ActionResult<UserDto>> Login(LoginDto _logindto)
     {
-        var user = await context.Users.FirstOrDefaultAsync(
+        var user = await context.Users
+        .Include(p=>p.photos)
+        .FirstOrDefaultAsync(
         x => x.UserName.ToLower() == _logindto.username.ToLower());
         if (user == null) return Unauthorized("Invalid UserName");
         using var hmac = new HMACSHA512(user.PasswordSalt);
@@ -57,7 +59,8 @@ return Ok();
         return new UserDto
         {
             UserName = user.UserName,
-            Token = tokenService.CreateToken(user)
+            Token = tokenService.CreateToken(user),
+            photoUrl =user.photos.FirstOrDefault(x=>x.IsMain)?.URL
         };
     }
 
