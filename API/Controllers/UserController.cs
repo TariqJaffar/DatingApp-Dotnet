@@ -56,6 +56,7 @@ URL=result.SecureUrl.AbsoluteUri,
 PublicID=result.PublicId
 
 };
+if(user.photos.Count==0)photo.IsMain=true;
 user.photos.Add(photo);
 
 if(await userRepository.SaveAllAsync())
